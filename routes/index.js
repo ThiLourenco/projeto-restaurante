@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
-const conn = require('./../database/db');
-const menus = require('./../database/menus');
+const conn = require('../inc/db');
+const reservations = require('./../inc/reservations');
+const menus = require('../inc/menus');
+const contacts = require('../inc/contacts');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,11 +22,32 @@ router.get('/', function(req, res, next) {
 
 router.get('/contacts', function(req, res, next) {
   
-  res.render('contacts', { 
-    title: 'Contato - Restaurante Saboroso !',
-    background: 'images/img_bg_3.jpg',
-    h1: 'Diga um oi!'    
-  });
+  contacts.render(req, res);
+
+});
+
+router.post('/contacts', function(req, res, next) {
+  
+  if(!req.body.name) {
+    contacts.render(req, res, "Digite o nome");
+
+  } else if(!req.body.email) {
+    contacts.render(req, res, "Digite o email");
+
+  } else if(!req.body.message) {
+    contacts.render(req, res, "Digite sua menssagem");
+  } else {
+    
+    contacts.send(req.body).then( results => {
+      req.body = {};
+
+      contacts.render(req, res, null, "Menssagem enviada com sucesso!");
+
+    }).catch( err => {
+      contacts.render(req, res, err.message);
+
+    });
+  }
 
 });
 
@@ -45,12 +67,39 @@ router.get('/menus', function(req, res, next) {
 });
 
 router.get('/reservations', function(req, res, next) {
+  reservations.render(req, res);
 
-  res.render('reservations', { 
-    title: 'Reservas - Restaurante Saboroso !',
-    background: 'images/img_bg_2.jpg',
-    h1: 'Reserve uma Mesa!'
-  });
+});
+
+router.post('/reservations', function(req, res, next) {
+
+  if(!req.body.name) {
+    reservations.render(req, res, "Digite o nome");
+
+  } else if(!req.body.email) {
+    reservations.render(req, res, "Digite o email");
+
+  } else if(!req.body.people) {
+    reservations.render(req, res, "Informe o número de pessoas");
+
+  } else if(!req.body.date) {
+    reservations.render(req, res, "Informe a data");
+
+  } else if(!req.body.time) {
+    reservations.render(req, res, "Informe a hora");
+
+  } else {
+
+    reservations.save(req.body).then(results => {
+
+      req.body = {};
+
+      reservations.render(req, res, null, "Reserva realizada com sucesso !");
+
+    }).catch(err => {
+      reservations.render(req, res, err.message);
+    });
+  }
 
 });
 
