@@ -1,7 +1,7 @@
 ## Projeto Web Restaurante Saboroso
 
 
-#### Tecnologias usadas
+#### Tecnologias utilizadas
 
 - Javascript
 - Nodejs
