@@ -1,4 +1,4 @@
-## Projeto Web Restaurante Saboroso
+## Projeto Web Restaurante Saboroso com Dashboard
 
 
 #### Tecnologias utilizadas
