@@ -6,6 +6,6 @@
 - Javascript
 - Nodejs
 - Mysql
-- Bower
 - AdminLTE (template)
+- Bower
 
