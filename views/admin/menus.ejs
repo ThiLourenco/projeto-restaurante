@@ -144,93 +144,28 @@
 
 <script src="/js/file-reader.js"></script>
 <script src="/js/form-save.js"></script>
+<script src="/js/grid.js"></script> 
 <script>
 
-  new NewFileReader('#modal-create [type=file]', '#modal-create img');
-  new NewFileReader('#modal-update [type=file]', '#modal-update img');
+new NewFileReader('#modal-create [type=file]', '#modal-create img');
+new NewFileReader('#modal-update [type=file]', '#modal-update img');
 
-  let formCreate = document.querySelector('#modal-create form');
+new Grid({
+  deleteUrl: '/admin/menus/${data.id}',
+  deleteMsg: 'Deseja confirmar a exclusão do registro menu: ${data.title}?',
+  onUpdateLoad: (form, name, data) => {
 
-  formCreate.save().then(json => {
+    let input = form.querySelector(`[name=${name}]`);
 
-    window.location.reload();
+    switch (name) {
 
-  }).catch(err=>{
-    console.log(err);
-
-  });
-
-  let formUpdate = document.querySelector('#modal-update form');
-
-  formUpdate.save().then(json => {
-
-    window.location.reload();
-
-  }).catch(err=>{
-    console.log(err);
-
-  });
-
-  [...document.querySelectorAll('.btn-delete')].forEach(btn => {
-
-    btn.addEventListener('click', e => {
-
-      let tr = e.path.find(el => {
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      if(confirm(`Deseja confirmar a exclusão do registro menu: ${data.title}?`)) {
-
-        fetch(`/admin/menus/${data.id}`, {
-          method: 'DELETE'
-
-        }).then(response => response.json()).then(json => {
-
-          //console.log(json);
-          window.location.reload();
-
-        });
-
-      }
-
-    });
-    
+      case 'photo':
+        form.querySelector('img').src = '/'+data[name];
+        break;
+      default:
+        if(input) input.value = data[name];
+    }
+  }
 });
-
-  [...document.querySelectorAll('.btn-update')].forEach(btn => {
-
-    btn.addEventListener('click', e => {
-        
-      let tr = e.path.find(el => {
-
-        return (el.tagName.toUpperCase() === 'TR');
-
-      });
-
-      let data = JSON.parse(tr.dataset.row);
-
-      for (let name in data) {
-
-        switch (name) {
-
-          case 'photo':
-            formUpdate.querySelector('img').src = '/'+data[name];
-          break;
-          default:
-            let input = formUpdate.querySelector(`[name=${name}]`);
-            if(input) input.value = data[name];
-        }
-
-      }
-
-      $('#modal-update').modal('show');
-
-    });
-
-  });
 
 </script>

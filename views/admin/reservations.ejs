@@ -207,9 +207,22 @@
 
 <script>  
 
-  new Grid({
-    deleteUrl: '/admin/reservations/${data.id}',
-    deleteMsg: 'Deseja confirmar a exclusão do registro reservas: ${data.name}?'
-  });
+new Grid({
+  deleteUrl: '/admin/reservations/${data.id}',
+  deleteMsg: 'Deseja confirmar a exclusão do registro reservas: ${data.name}?',
+  onUpdateLoad: (form, name, data) => {
+
+  let input = form.querySelector(`[name=${name}]`);
+
+    switch (name) {
+
+      case 'date':
+        if(input) input.value = moment(data[name]).format('YYYY-MM-DD');
+        break;
+      default:
+        if(input) input.value = data[name];
+    }
+  }
+});
 
 </script>
