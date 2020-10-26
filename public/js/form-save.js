@@ -5,7 +5,7 @@ HTMLFormElement.prototype.save = function() {
   return new Promise((resolve, reject) => {
 
     form.addEventListener('submit', e => {
-    
+     
       e.preventDefault();
   
       let formData = new FormData(form);
@@ -13,9 +13,7 @@ HTMLFormElement.prototype.save = function() {
       fetch(form.action, {
         method: form.method,
         body: formData
-      })
-        .then(response => response.json())
-        .then(json => {
+      }).then(response => response.json()).then(json => {
   
            resolve(json);
   
