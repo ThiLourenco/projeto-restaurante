@@ -2,26 +2,9 @@ const conn = require('./db');
 
 module.exports = {
 
-  getUsers() {
-    
-    return new Promise((resolve, reject) => {
-
-      conn.query(`
-          SELECT * FROM tb_users ORDER BY name 
-      `, (err, results) => {
-  
-      if(err) {
-        reject(err);
-      }
-      resolve(results);  
-      
-      });
-    });
-  },
-
   render(req, res, error) {
 
-    res.render('admin/users', {
+    res.render('admin/login', {
         body: req.body,
         error
     });
@@ -66,16 +49,34 @@ module.exports = {
 
   },
 
+  getUsers(){
+
+    return new Promise((resolve, reject) => {
+
+      conn.query(`
+        SELECT * FROM tb_users ORDER BY name 
+    `, (err, results) => {
+  
+      if(err) {
+        reject(err);
+      }
+      resolve(results);  
+      
+    });
+
+    });
+
+  },
+
   save(fields, files) {
 
     return new Promise((resolve, reject) => {
 
-      let query, params = [
+      let query, queryPhoto = '', params = [
         fields.name,
         fields.email
       ];
 
-      
       if (parseInt(fields.id) > 0) {
 
         params.push(fields.id);
@@ -93,7 +94,7 @@ module.exports = {
             INSERT INTO tb_users (name, email, password)
             VALUES(?, ?, ?)
         `;
-        
+
         params.push(fields.password);
 
       }
@@ -125,7 +126,7 @@ module.exports = {
           reject(err);
         } else {
           resolve(results);
-      }
+        }
 
       });
 
@@ -140,33 +141,30 @@ module.exports = {
       if(!req.fields.password) {
           reject('Preencha a senha.');
 
-      } else if (req.fields.password !== req.fields.passwordConfirm) {
-          reject('Confirme a senha corretamente.');
+      } else if (req.fields.password !== req.fields.passwordConfirm ) {
+        reject('Confirme a senha corretamente.');
 
       } else {
 
         conn.query(`
-              UPDATE tb_users
-              SET password = ?
-              WHERE id = ?
+            UPDATE tb_users
+            SET password = ?
+            WHERE id = ?
         `, [
-          req.fields.password,
-          req.fields.id
+            req.fields.password,
+            req.fields.id
         ], (err, results) => {
 
-          if(err){
-            reject(err.message);
-
+          if (err) {
+            reject(err);
           } else {
-
             resolve(results);
           }
-
         });
-
       }
 
     });
+
   }
 
 }

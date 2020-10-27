@@ -3,6 +3,8 @@ const router = express.Router();
 const users = require('./../inc/users');
 const admin = require('./../inc/admin');
 const menus = require('./../inc/menus');
+const contacts = require('./../inc/contacts');
+const emails = require('./../inc/emails');
 const reservations = require('./../inc/reservations');
 const moment = require('moment');
 moment.locale('pt-br');
@@ -49,18 +51,48 @@ router.get('/', function(req, res, next) {
 
   })
     
-
 });
 
 router.get('/contacts', function(req, res, next) {
 
-  res.render('admin/contacts', admin.getParams(req));
+  contacts.getContacts().then(data=>{
+
+    res.render('admin/contacts', admin.getParams(req, {
+      data
+    }));
+  });
+
+});
+
+router.delete('/contacts/:id', function(req, res, next) {
+
+  contacts.delete(req.params.id).then(results => {
+    res.send(results);
+
+  }).catch(err => {
+    res.send(err);
+  });
 
 });
 
 router.get('/emails', function(req, res, next) {
 
-  res.render('admin/emails', admin.getParams(req));
+  emails.getEmails().then(data => {
+    res.render('admin/emails', admin.getParams(req, {
+      data
+    }));
+
+  }) 
+});
+
+router.delete('/emails/:id', function(req, res, next) {
+
+  emails.delete(req.params.id).then(results => {
+    res.send(results);
+
+  }).catch(err => {
+    res.send(err);
+  });
 
 });
 
