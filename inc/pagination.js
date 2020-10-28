@@ -86,6 +86,15 @@ class Pagination {
       nrend = this.getCurrentPage() + parseInt(limitPageNav / 2);
     }
 
+    // button back page
+    if (this.getCurrentPage() > 1) {
+      links.push({
+        text:'«',
+        href: '?' + this.getQueryString(Object.assign({}, params, {
+          page: this.getCurrentPage() - 1}))
+      })
+    }
+
     for (let x = nrstart; x <=nrend; x++) {
 
       links.push({
@@ -94,6 +103,14 @@ class Pagination {
         active: (x === this.getCurrentPage())
       });
 
+    }
+    //  button next page
+    if(this.getCurrentPage() < this.getTotalPages()) {
+      links.push({
+        text: '»',
+        href: '?' + this.getQueryString(Object.assign({}, params, {
+          page: this.getCurrentPage() + 1}))
+      })
     }
 
     return links;
