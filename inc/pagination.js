@@ -77,7 +77,8 @@ class Pagination {
     
     // if u are on the last page
     } else if ((this.getCurrentPage() + parseInt(limitPageNav / 2)) > this.getTotalPages()) {
-      nrstart = this.getTotalPages() - limitPageNav;
+      //nrstart = this.getTotalPages() - limitPageNav;
+      nrstart = 1;
       nrend = this.getTotalPages();
 
     // if u are in the middle of navigation
