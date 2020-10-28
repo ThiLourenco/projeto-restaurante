@@ -17,7 +17,7 @@ class Pagination {
 
   getPage(page) {
 
-    this.currentPage = page - 1;
+    this.currentPage = page -1;
 
     this.params.push(
       this.currentPage * this.itensPerPage,
@@ -76,7 +76,7 @@ class Pagination {
       nrend = limitPageNav;
     
     // if u are on the last page
-    } else if ((this.getCurrentPage() + parseInt(limitPageNav / 1)) > this.getTotalPages()) {
+    } else if ((this.getCurrentPage() + parseInt(limitPageNav / 2)) > this.getTotalPages()) {
       nrstart = this.getTotalPages() - limitPageNav;
       nrend = this.getTotalPages();
 
