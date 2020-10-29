@@ -74,4 +74,4 @@ http://localhost:8080/admin/login
 
 ---
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE]() para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](/LICENSE.md) para mais detalhes.
