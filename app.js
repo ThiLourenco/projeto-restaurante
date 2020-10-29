@@ -25,6 +25,8 @@ var indexRouter = require('./routes/index')(io);
 var adminRouter = require('./routes/admin')(io);
 
 app.use(function(req, res, next) {
+  
+  req.body = {}
 
   if(req.method.toLocaleLowerCase() === 'post') {
 
