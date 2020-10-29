@@ -144,7 +144,7 @@ CREATE TABLE `tb_users` (
 
 LOCK TABLES `tb_users` WRITE;
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
-INSERT INTO `tb_users` VALUES (1,'João Rangel','joao@hcode.com.br','123456','2018-04-17 18:57:44');
+INSERT INTO `tb_users` VALUES (1,'Usuário','user@teste.com.br','123','2020-10-28 20:37:44');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
